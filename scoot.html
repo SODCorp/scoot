@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AR Smart Redirect</title>
+</head>
+<body>
+  <!-- iOS Quick Look fallback with auto AR -->
+  <a id="ios-ar" rel="ar" href="https://sodcorp.github.io/scoot/scoot.usdz">
+    <img src="poster.png" alt="" width="1" height="1" style="opacity:0;" />
+  </a>
+
+  <script>
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+      // Android → Google Scene Viewer
+      window.location.href = "https://arvr.google.com/scene-viewer/1.0?file=https://sodcorp.github.io/scoot/scoot.glb&mode=ar_preferred&title=Scoot";
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      // iOS → Auto-trigger AR Quick Look
+      document.getElementById("ios-ar").click();
+    } else {
+      // Desktop or unsupported device
+      document.body.innerHTML = "<h2>This AR experience is only available on mobile devices (Android & iOS).</h2>";
+    }
+  </script>
+</body>
+</html>
